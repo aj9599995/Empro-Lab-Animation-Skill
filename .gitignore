@@ -1,0 +1,20 @@
+# macOS / Windows
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Script output (capture_motion.py default folder)
+motion-capture/
+
+# Node / editors
+node_modules/
+.env
+.vscode/
+.idea/
+
+# Local tool caches (design hook)
+.impeccable/

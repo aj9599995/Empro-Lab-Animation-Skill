@@ -1,0 +1,103 @@
+/*
+  motion-tokens.css - starter motion layer for ANIMATION.md
+
+  Values below are the "calm" personality (references/motion-personalities.md).
+  Change the values for another personality. Keep the names: components use names only.
+
+  Add class="js" to <html> in a small head script, so reveal content stays visible
+  when JavaScript is off:
+    <script>document.documentElement.classList.add('js');</script>
+*/
+
+:root {
+  /* Durations */
+  --motion-duration-instant: 90ms;
+  --motion-duration-fast: 150ms;
+  --motion-duration-base: 240ms;
+  --motion-duration-slow: 400ms;
+  --motion-duration-slower: 600ms;
+
+  /* Easings */
+  --motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --motion-ease-enter: cubic-bezier(0, 0, 0.2, 1);
+  --motion-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --motion-ease-emphasis: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --motion-ease-linear: linear;
+
+  /* Distances (movement only; these go to 0 under reduced motion) */
+  --motion-distance-sm: 4px;
+  --motion-distance-md: 8px;
+  --motion-distance-lg: 16px;
+
+  /* Stagger between list items */
+  --motion-stagger: 60ms;
+}
+
+/* ---------- Shared keyframes ---------- */
+
+@keyframes motion-fade-up {
+  from { opacity: 0; transform: translateY(var(--motion-distance-md)); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes motion-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Entrance. Stagger with an inline index:  <li class="motion-enter" style="--i: 2">  */
+.motion-enter {
+  animation: motion-fade-up var(--motion-duration-base) var(--motion-ease-enter) both;
+  animation-delay: calc(var(--i, 0) * var(--motion-stagger));
+}
+
+/* ---------- Reveal on scroll (pairs with templates/reveal.js) ---------- */
+
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(var(--motion-distance-lg));
+  transition:
+    opacity var(--motion-duration-slow) var(--motion-ease-enter),
+    transform var(--motion-duration-slow) var(--motion-ease-enter);
+}
+
+.js [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Focus is never animated away ---------- */
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* ---------- Reduced motion ----------
+   Movement goes to zero. State changes stay (fades and colour changes still happen).
+   Loops stop or slow down. Smooth scrolling is turned off. */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-distance-sm: 0px;
+    --motion-distance-md: 0px;
+    --motion-distance-lg: 0px;
+    --motion-stagger: 0ms;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  .motion-enter {
+    animation-name: motion-fade;
+  }
+
+  .js [data-reveal] {
+    transform: none;
+  }
+
+  /* Every loop in the project needs an override here, for example:
+     .skeleton::after { animation: none; }
+     .spinner { animation-duration: 2.4s; }   (slower, still visible) */
+}

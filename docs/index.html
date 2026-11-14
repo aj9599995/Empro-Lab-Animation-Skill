@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en" data-personality="calm" data-motion="full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Empro Lab Animation Skill</title>
+  <meta name="description" content="A Claude Code skill for web motion. Write the motion spec first, then build the animation.">
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <span class="brand">Empro Lab · Animation Skill</span>
+    <nav aria-label="Page sections">
+      <a href="#tiers">Tiers</a>
+      <a href="#tokens">Tokens</a>
+      <a href="#reveal">Reveal</a>
+      <a href="https://github.com/aj9599995/Empro-Lab-Animation-Skill">GitHub</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <h1 class="motion-enter" style="--i: 0">Spec the motion first. Then build it.</h1>
+      <p class="lead motion-enter" style="--i: 1">
+        A Claude Code skill for web motion. ANIMATION.md turns a reference, a feeling or existing code
+        into timing tokens, a choreography table and reduced-motion fallbacks, before a single line of
+        animation code is written.
+      </p>
+      <div class="hero-actions motion-enter" style="--i: 2">
+        <button class="btn btn-primary" id="replay" type="button">Replay the entrance</button>
+        <a class="btn" href="#tokens">See the tokens</a>
+      </div>
+    </section>
+
+    <section id="tokens" class="panel">
+      <h2>Live tokens</h2>
+      <p>Change the personality and every token on this page changes with it. Turn on reduced motion to see the movement go to zero while state changes stay.</p>
+
+      <div class="controls">
+        <label>
+          Personality
+          <select id="personality">
+            <option value="calm">Calm</option>
+            <option value="snappy">Snappy</option>
+            <option value="playful">Playful</option>
+            <option value="cinematic">Cinematic</option>
+          </select>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="reduce">
+          Reduced motion
+        </label>
+      </div>
+
+      <div class="token-demo">
+        <button class="token-box" id="token-box" type="button" aria-pressed="false">Press to move</button>
+        <dl class="token-readout">
+          <dt>--motion-duration-base</dt><dd id="readout-duration">240ms</dd>
+          <dt>--motion-ease-enter</dt><dd id="readout-ease">cubic-bezier(0, 0, 0.2, 1)</dd>
+          <dt>--motion-distance-md</dt><dd id="readout-distance">8px</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section id="tiers" class="panel">
+      <h2>Three interaction tiers</h2>
+      <div class="grid">
+        <article class="card">
+          <span class="tag">L1 · Micro</span>
+          <h3>Hover, focus, press</h3>
+          <p>CSS transitions only. Feedback in 100 to 250 ms, with a focus ring for keyboard users.</p>
+          <button class="btn btn-micro" type="button">Hover me</button>
+        </article>
+
+        <article class="card">
+          <span class="tag">L2 · Choreographed</span>
+          <h3>Enter and exit</h3>
+          <p>Keyframes, the Web Animations API or a GSAP timeline. Lists stagger in reading order.</p>
+          <button class="btn" id="collapse-toggle" type="button" aria-expanded="false" aria-controls="collapse-demo">Show details</button>
+          <div class="collapse" id="collapse-demo" data-open="false">
+            <div>
+              <p>The height animates with grid-template-rows, so no pixel height is needed.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <span class="tag">L3 · Scroll story</span>
+          <h3>Scroll-linked progress</h3>
+          <p>The bar at the top of this page is tied to scroll position. Pins are capped at two per page, and they turn off on phones.</p>
+          <p class="muted">Off under reduced motion.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="reveal" class="panel">
+      <h2>Scroll reveal</h2>
+      <p>Each card reveals once, as it enters the screen. With reduced motion, or without JavaScript, they show at once.</p>
+      <div class="grid">
+        <article class="card" data-reveal><h3>Spec first</h3><p>Write the tokens, the choreography table and the fallbacks before the code.</p></article>
+        <article class="card" data-reveal><h3>Tokens everywhere</h3><p>Every duration and easing is a variable. No magic numbers in components.</p></article>
+        <article class="card" data-reveal><h3>Transform and opacity</h3><p>Only the cheap properties animate, unless an exception is recorded.</p></article>
+        <article class="card" data-reveal><h3>Reduced motion first</h3><p>Movement is removed and state changes stay, from the first version.</p></article>
+        <article class="card" data-reveal><h3>Audit the code</h3><p>A static audit flags layout animation, infinite loops and missing fallbacks.</p></article>
+        <article class="card" data-reveal><h3>Capture a reference</h3><p>Record the real durations and easings from a live page before copying the feel.</p></article>
+      </div>
+    </section>
+
+    <section class="panel install">
+      <h2>Install</h2>
+      <p>Paste one line in your terminal. You need Claude Code and Git. Windows PowerShell:</p>
+      <pre><code>$d = "$env:USERPROFILE\.claude\skills\empro-labs-animation-skill"; if (Test-Path "$d\.git") { git -C $d pull --ff-only } else { git clone https://github.com/aj9599995/Empro-Lab-Animation-Skill $d }</code></pre>
+      <p>Mac, Linux or Git Bash:</p>
+      <pre><code>d="$HOME/.claude/skills/empro-labs-animation-skill"; if [ -d "$d/.git" ]; then git -C "$d" pull --ff-only; else git clone https://github.com/aj9599995/Empro-Lab-Animation-Skill "$d"; fi</code></pre>
+      <p>Then type <code>/</code> in Claude Code and choose <code>empro-labs-animation-skill</code>. The full install steps are in the <a href="https://github.com/aj9599995/Empro-Lab-Animation-Skill#install-in-one-line">README</a>. This page is built with its own spec: <a href="ANIMATION.md">docs/ANIMATION.md</a>.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>MIT licence</span>
+    <a href="https://github.com/aj9599995/Empro-Lab-Animation-Skill">Source on GitHub</a>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

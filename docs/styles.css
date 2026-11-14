@@ -1,0 +1,283 @@
+/* ---------- Tokens (calm, default) ---------- */
+:root {
+  --motion-duration-instant: 90ms;
+  --motion-duration-fast: 150ms;
+  --motion-duration-base: 240ms;
+  --motion-duration-slow: 400ms;
+  --motion-duration-slower: 600ms;
+  --motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --motion-ease-enter: cubic-bezier(0, 0, 0.2, 1);
+  --motion-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --motion-ease-emphasis: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --motion-ease-linear: linear;
+  --motion-distance-sm: 4px;
+  --motion-distance-md: 8px;
+  --motion-distance-lg: 16px;
+  --motion-stagger: 60ms;
+
+  --bg: #0b0d12;
+  --surface: #13161e;
+  --surface-2: #1b1f2a;
+  --border: #2a2f3d;
+  --text: #eef1f6;
+  --text-2: #aab2c3;
+  --accent: #5eead4;
+  --accent-ink: #052320;
+  --focus-rgb: 94 234 212;
+  --color-accent: var(--accent);
+  --color-accent-hover: #7ff2de;
+  --color-focus: var(--accent);
+  --max: 1080px;
+}
+
+/* ---------- Personalities (override tokens) ---------- */
+[data-personality="snappy"] {
+  --motion-duration-instant: 60ms;
+  --motion-duration-fast: 100ms;
+  --motion-duration-base: 180ms;
+  --motion-duration-slow: 280ms;
+  --motion-duration-slower: 400ms;
+  --motion-distance-sm: 2px;
+  --motion-stagger: 30ms;
+}
+
+[data-personality="playful"] {
+  --motion-duration-instant: 120ms;
+  --motion-duration-fast: 200ms;
+  --motion-duration-base: 320ms;
+  --motion-duration-slow: 480ms;
+  --motion-duration-slower: 700ms;
+  --motion-ease-standard: cubic-bezier(0.3, 0, 0, 1);
+  --motion-ease-emphasis: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --motion-distance-sm: 6px;
+  --motion-distance-md: 16px;
+  --motion-distance-lg: 40px;
+  --motion-stagger: 70ms;
+}
+
+[data-personality="cinematic"] {
+  --motion-duration-instant: 120ms;
+  --motion-duration-fast: 220ms;
+  --motion-duration-base: 450ms;
+  --motion-duration-slow: 800ms;
+  --motion-duration-slower: 1200ms;
+  --motion-ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-exit: cubic-bezier(0.7, 0, 0.84, 0);
+  --motion-ease-standard: cubic-bezier(0.65, 0, 0.35, 1);
+  --motion-ease-emphasis: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-distance-sm: 8px;
+  --motion-distance-md: 16px;
+  --motion-distance-lg: 80px;
+  --motion-stagger: 100ms;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.6 "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+a { color: var(--accent); }
+
+h1, h2, h3 { line-height: 1.15; margin: 0 0 12px; letter-spacing: -0.01em; }
+h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); max-width: 18ch; }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+h3 { font-size: 1.1rem; }
+p { margin: 0 0 14px; color: var(--text-2); }
+.muted { font-size: 0.9rem; opacity: 0.8; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute; left: 12px; top: 12px;
+  background: var(--accent); color: var(--accent-ink);
+  padding: 8px 12px; border-radius: 6px; z-index: 10;
+  transform: translateY(-160%);
+  transition: transform var(--motion-duration-fast) var(--motion-ease-standard);
+}
+.skip-link:focus { transform: none; }
+
+/* ---------- Progress (scroll-linked) ---------- */
+.progress {
+  position: fixed; inset: 0 0 auto 0; height: 3px;
+  background: var(--accent);
+  transform-origin: left center;
+  transform: scaleX(0);
+  z-index: 5;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 4;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px clamp(16px, 4vw, 40px);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+.brand { font-weight: 600; }
+.site-header nav { display: flex; gap: 18px; flex-wrap: wrap; }
+.site-header nav a { text-decoration: none; color: var(--text-2); transition: color var(--motion-duration-fast) var(--motion-ease-standard); }
+.site-header nav a:hover { color: var(--text); }
+
+/* ---------- Layout ---------- */
+main, .site-footer { max-width: var(--max); margin: 0 auto; padding: 0 clamp(16px, 4vw, 40px); }
+
+.hero { padding: clamp(48px, 10vw, 110px) 0 56px; }
+.lead { font-size: 1.1rem; max-width: 60ch; }
+
+.panel { padding: 56px 0; border-top: 1px solid var(--border); }
+
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+  transition:
+    transform var(--motion-duration-base) var(--motion-ease-standard),
+    border-color var(--motion-duration-base) var(--motion-ease-standard);
+}
+.card:hover,
+.card:focus-within { transform: translateY(calc(var(--motion-distance-sm) * -1)); border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
+
+.tag {
+  display: inline-block; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  padding: 3px 8px; border-radius: 999px; margin-bottom: 12px;
+}
+
+/* ---------- Buttons (L1 micro) ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: inherit; font-weight: 600; color: var(--text);
+  background: var(--surface-2); border: 1px solid var(--border);
+  padding: 10px 16px; border-radius: 10px; text-decoration: none; cursor: pointer;
+  transition:
+    background-color var(--motion-duration-fast) var(--motion-ease-standard),
+    border-color var(--motion-duration-fast) var(--motion-ease-standard),
+    transform var(--motion-duration-fast) var(--motion-ease-standard);
+}
+.btn:hover { border-color: var(--accent); transform: translateY(calc(var(--motion-distance-sm) * -0.5)); }
+.btn:active { transform: scale(0.98); transition-duration: var(--motion-duration-instant); }
+
+.btn-primary,
+.btn-micro:hover { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn-primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn-primary:hover { background: var(--color-accent-hover); }
+
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+
+/* ---------- Entrance (L2) ---------- */
+.motion-enter {
+  animation: motion-fade-up var(--motion-duration-base) var(--motion-ease-enter) both;
+  animation-delay: calc(var(--i, 0) * var(--motion-stagger));
+}
+@keyframes motion-fade-up {
+  from { opacity: 0; transform: translateY(var(--motion-distance-md)); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes motion-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ---------- Controls ---------- */
+.controls { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; margin: 20px 0; }
+select {
+  font: inherit; color: var(--text); background: var(--surface-2);
+  border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; margin-left: 8px;
+}
+.toggle { display: inline-flex; align-items: center; gap: 8px; color: var(--text-2); }
+.toggle input { accent-color: var(--accent); width: 18px; height: 18px; }
+
+/* ---------- Token demo ---------- */
+.token-demo { display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; }
+.token-box {
+  justify-self: start;
+  font: inherit; font-weight: 600; color: var(--accent-ink); background: var(--accent);
+  border: 0; border-radius: 14px; padding: 28px 32px; cursor: pointer;
+  transition:
+    transform var(--motion-duration-base) var(--motion-ease-enter),
+    background-color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+.token-box[aria-pressed="true"] { transform: translateX(calc(var(--motion-distance-lg) * 4)); background: var(--color-accent-hover); }
+.token-readout { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin: 0; font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: 0.85rem; }
+.token-readout dt { color: var(--text-2); }
+.token-readout dd { margin: 0; color: var(--text); }
+
+/* ---------- Collapse (accordion, L2) ---------- */
+.collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  /* motion-exception: accordion height uses grid-template-rows inside one small card; see ANIMATION.md section 7 */
+  transition: grid-template-rows var(--motion-duration-base) var(--motion-ease-standard);
+}
+.collapse[data-open="true"] { grid-template-rows: 1fr; margin-top: 12px; }
+.collapse > div { overflow: hidden; min-height: 0; }
+
+/* ---------- Reveal ---------- */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(var(--motion-distance-lg));
+  transition:
+    opacity var(--motion-duration-slow) var(--motion-ease-enter),
+    transform var(--motion-duration-slow) var(--motion-ease-enter);
+}
+.js [data-reveal].is-revealed { opacity: 1; transform: none; }
+
+/* ---------- Install and footer ---------- */
+pre {
+  overflow-x: auto; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px 16px; font-size: 0.9rem;
+}
+code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
+.site-footer {
+  display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding-top: 24px; padding-bottom: 40px; border-top: 1px solid var(--border);
+  color: var(--text-2); font-size: 0.9rem;
+}
+
+/* ---------- Phones ---------- */
+@media (max-width: 600px) {
+  .token-demo { grid-template-columns: 1fr; }
+  .token-box[aria-pressed="true"] { transform: translateX(0); }
+  .site-header nav a:not(:last-child) { display: none; }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .motion-enter { animation-name: motion-fade; }
+  .js [data-reveal] { transform: none; }
+  .progress { display: none; }
+}
+
+/* The page's own reduced-motion switch (set by app.js) mirrors the OS rule */
+[data-motion="reduce"] {
+  --motion-distance-sm: 0px;
+  --motion-distance-md: 0px;
+  --motion-distance-lg: 0px;
+  --motion-stagger: 0ms;
+}
+[data-motion="reduce"] html { scroll-behavior: auto; }
+[data-motion="reduce"] .motion-enter { animation-name: motion-fade; }
+[data-motion="reduce"] .js [data-reveal] { transform: none; }
+[data-motion="reduce"] .progress { display: none; }
+[data-motion="reduce"] .token-box[aria-pressed="true"] { transform: none; }
